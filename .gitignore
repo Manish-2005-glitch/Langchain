@@ -1,2 +1,5 @@
+template.json
 .env
 venv/
+requirements.txt
+
