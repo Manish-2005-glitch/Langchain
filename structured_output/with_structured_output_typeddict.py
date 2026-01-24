@@ -1,6 +1,6 @@
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from dotenv import load_dotenv
-from typing import TypedDict
+from typing import TypedDict, Annotated, Optional
 
 load_dotenv()
 
@@ -11,9 +11,10 @@ llm = HuggingFaceEndpoint(
 model = ChatHuggingFace(llm = llm)
 
 class Review(TypedDict):
-    
-    summary : str
-    sentiment : str
+    key_themes : Annotated[list[str], "Write down all the key themes discussed in the review in a list"]
+    summary : Annotated[str, "A brief summary of the review"]
+    sentiment : Annotated[str, "Return sentiment of the review either positive, negative or neutral"]
+    name : Annotated[Optional[str], "If the review mentions any person's name, extract it here. If no name is mentioned, return null"]
     
 structured_model = model.with_structured_output(Review)
 
